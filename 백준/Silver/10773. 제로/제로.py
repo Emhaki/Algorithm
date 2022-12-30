@@ -1,14 +1,12 @@
-K = int(input())
-input_list = []
-stack = []
+N = int(input())
+list_ = []
+result = []
+for i in range(N):
+  list_.append(int(input()))
 
-for _ in range(K):
-    input_list.append(int(input()))
-
-for elem in input_list:
-    if elem != 0:
-        stack.append(elem)
-    else:
-        stack.pop()
-
-print(sum(stack))
+for k in list_:
+  if k != 0:
+    result.append(k)
+  else:
+    result.pop()
+print(sum(result))
