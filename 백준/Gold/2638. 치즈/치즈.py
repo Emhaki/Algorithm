@@ -13,11 +13,11 @@ dy = [-1,1,0,0]
 
 def Cheese():
     global cheddar
-    new_cheddar = copy.deepcopy(cheddar)
+    melting = copy.deepcopy(cheddar)
     cheddar = deque()
 
-    while new_cheddar:
-        x, y = new_cheddar.popleft()
+    while melting:
+        x, y = melting.popleft()
 
         for i in range(4):
             nx = dx[i] + x
@@ -30,7 +30,7 @@ def Cheese():
                         cheddar.append((nx, ny))
                     
                 if graph[nx][ny] == 0:
-                    new_cheddar.append((nx,ny))
+                    melting.append((nx,ny))
     
     # 치즈 삭제
     for x, y in cheddar:
