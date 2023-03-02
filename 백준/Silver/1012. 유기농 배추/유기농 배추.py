@@ -1,41 +1,35 @@
+import sys
+input = sys.stdin.readline
+
+sys.setrecursionlimit(10000)
 T = int(input())
 
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
+dx = [0,0,-1,1]
+dy = [-1,1,0,0]
 
-def BFS(x, y):
-  queue = [(x, y)]
-  matrix[x][y] = 0 # 방문처리 
+def dfs(x, y):
 
-  while queue:
-    x, y = queue.pop(0)
-
-    # 네 방향 탐색 
     for i in range(4):
-      nx = x + dx[i]
-      ny = y + dy[i]
+        nx = dx[i] + x
+        ny = dy[i] + y
 
-      if nx < 0 or nx >= M or ny < 0 or ny >= N:
-        continue
+        if 0 <= nx < M and 0 <= ny < N and graph[ny][nx] == 1:
+            graph[ny][nx] = 0
+            dfs(nx,ny)
 
-      if matrix[nx][ny] == 1:
-        queue.append((nx, ny))
-        matrix[nx][ny] = 0
+for _ in range(T):
+    M, N, K = map(int, input().split())
+    graph = [[0] * M for i in range(N)]
+    cnt = 0
 
-for i in range(T):
-  M, N, K = map(int, input().split())
-  matrix = [[0]*N for _ in range(M)]
-  cnt = 0
+    for i in range(K):
+        a, b = map(int, input().split())
+        graph[b][a] = 1
 
-  for j in range(K):
-    x, y = map(int, input().split())
-    matrix[x][y] = 1
-  
-  # 탐색을 위한 2중 for문 
-  for a in range(M):
-    for b in range(N):
-      if matrix[a][b] == 1:
-        BFS(a,b)
-        cnt += 1
+    for x in range(M):
+        for y in range(N):
+            if graph[y][x] == 1:
+                dfs(x,y)
+                cnt += 1
 
-  print(cnt)
+    print(cnt)
