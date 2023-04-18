@@ -1,37 +1,45 @@
 import sys
 input = sys.stdin.readline
 
+from collections import deque
+
 N = int(input())
 graph = [list(map(int, input().strip())) for _ in range(N)]
-visited = [[0]*N for _ in range(N)]
-dx = [0,0,-1,1]
-dy = [-1,1,0,0]
+visited = [[-1]* N for _ in range(N)]
+dx, dy = [0,0,-1,1], [-1,1,0,0]
+queue = deque()
+answer = []
+def bfs(i,j):
+    queue.append((i,j))
+    visited[i][j] = 0
+    cnt = 1
 
-house_list = []
+    while queue:
+        x, y = queue.popleft()
+        
+        for i in range(4):
+            nx, ny = dx[i] + x, dy[i] + y
 
-def dfs(x,y):
-    visited[x][y] = 1 # 방문처리
-    global house_cnt
-    
-    for i in range(4):
-        nx = dx[i] + x
-        ny = dy[i] + y
+            if 0 > nx or nx >= N or 0 > ny or ny >= N:
+                continue
+            if graph[nx][ny] == 1 and visited[nx][ny] == -1:
+                graph[nx][ny] = 0
+                cnt += 1
+                queue.append((nx, ny))
+    return cnt
+                
 
-        if 0 <= nx < N and 0 <= ny < N and visited[nx][ny] == 0 and graph[nx][ny] == 1:
-            dfs(nx,ny)
-            house_cnt += 1
 
-house_cnt = 1
-cnt = 0
+
+
+
 for i in range(N):
     for j in range(N):
-        if visited[i][j] == 0 and graph[i][j] == 1:
-            dfs(i,j)
-            house_list.append(house_cnt)
-            house_cnt = 1
-            cnt += 1
-
-print(cnt)
-house_list.sort()
-for i in house_list:
+        if graph[i][j] == 1:
+            answer.append(bfs(i,j))
+            
+        
+answer.sort()
+print(len(answer))
+for i in answer:
     print(i)
