@@ -4,7 +4,8 @@ input = sys.stdin.readline
 from collections import deque
 N = int(input())
 graph = [list(map(str, input().strip())) for _ in range(N)]
-visited = [[0]*N for _ in range(N)]
+visited = [[0] * N for _ in range(N)]
+
 dx = [0,0,-1,1]
 dy = [-1,1,0,0]
 
@@ -29,11 +30,11 @@ local2 = 0
 for i in range(N):
     for j in range(N):
         if visited[i][j] == 0:
-            color = graph[i][j]
-            bfs(i,j,color)
+            color = graph[i][j] # 현재 컬러 저장
+            bfs(i,j, color)
             local += 1
 
-visited = [[0]*N for _ in range(N)]
+visited = [[0] * N for _ in range(N)]
 for i in range(N):
     for j in range(N):
         if graph[i][j] == 'G':
@@ -43,7 +44,7 @@ for i in range(N):
     for j in range(N):
         if visited[i][j] == 0:
             color = graph[i][j]
-            bfs(i,j,color)
+            bfs(i,j, color)
             local2 += 1
 
 print(local, local2)
