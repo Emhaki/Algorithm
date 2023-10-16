@@ -6,14 +6,11 @@ for _ in range(n):
 
 grade = sorted(grade, key = lambda x : (-x[1], -x[2], -x[3]))
 
-idx = []
-for i in grade:
-  if i in grade:
-    idx.append(i)
-
-for i in grade:
-  if i[0] == k:
+for i in range(n):
+  if grade[i][0] == k:
     idx = i
 
-# [[1, 3, 0, 0], [4, 0, 2, 0], [2, 0, 2, 0], [3, 0, 0, 2]]
-print(grade.index(idx))
+for i in range(n):
+  if grade[idx][1:] == grade[i][1:]:
+    print(i + 1)
+    break
